@@ -8,6 +8,18 @@ typedef struct node
 }
 node;
 
+int unload(node *ptr)
+{
+    if (ptr == NULL)
+    {
+        return 0;
+    }
+
+    node *temp = ptr->next;
+    free(ptr);
+    return unload(temp);
+}
+
 int main ()
 {
     // N for how many int
@@ -16,6 +28,7 @@ int main ()
 
     // Creating a list
     node *list = NULL;
+    
     for (int i = 0; i < n; i++)
     {
         // Creating a new node
@@ -41,14 +54,8 @@ int main ()
         ptr = ptr->next;
     }
 
-    // Cleaning the garbage
-    ptr = list;
-    while (ptr != NULL)
-    {
-        node *temp = ptr->next;
-        free(ptr);
-        ptr = temp;
-    }
+    // Cleaning the list
+    unload(list);
 
     // New line for the look
     printf("\n");
