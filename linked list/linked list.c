@@ -8,11 +8,11 @@ typedef struct node
 }
 node;
 
-int unload(node *ptr)
+void unload(node *ptr)
 {
     if (ptr == NULL)
     {
-        return 0;
+        return;
     }
 
     node *temp = ptr->next;
@@ -28,7 +28,7 @@ int main ()
 
     // Creating a list
     node *list = NULL;
-    
+
     for (int i = 0; i < n; i++)
     {
         // Creating a new node
