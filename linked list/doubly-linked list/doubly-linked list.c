@@ -53,31 +53,38 @@ bool search(node *ptr, int value)
 // remove a value from the list
 node *delete(node *root ,node *ptr, int value)
 {
+    // if the end of the list -> return the original root
     if (ptr == NULL)
     {
         return root;
     }
 
+    // if not the wanted value -> go to the next node
     if (ptr->number != value)
     {
         return delete(root, ptr->next, value);
     }
 
+    // if it's the start of the list -> return the new address
     if (ptr->prev == NULL)
     {
         node *temp = ptr->next;
         free(ptr);
         return temp;
     }
-
+    // or change it to the next address
     ptr->prev->next = ptr->next;
 
+    // if it's not the end of the list
     if (ptr->next != NULL)
     {
         ptr->next->prev = ptr->prev;
     }
 
+    // free the the node
     free(ptr);
+
+    // return the original root
     return root;
 }
 
