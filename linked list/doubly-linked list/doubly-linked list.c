@@ -11,6 +11,7 @@ typedef struct node
 }
 node;
 
+// insert a new value to the list
 node *insert (node *list, int value)
 {
     // creating a new node
@@ -30,6 +31,7 @@ node *insert (node *list, int value)
     return temp;
 }
 
+// search for a value in the list
 bool search(node *ptr, int value)
 {
     // if the end of the list -> exit with false
@@ -48,39 +50,38 @@ bool search(node *ptr, int value)
     return search(ptr->next, value);
 }
 
-void delete(node *ptr, int value)
+// remove a value from the list
+node *delete(node *root ,node *ptr, int value)
 {
-    if(ptr == NULL)
+    if (ptr == NULL)
     {
-        return;
+        return root;
     }
 
     if (ptr->number != value)
     {
-        return delete(ptr->next, value);
+        return delete(root, ptr->next, value);
     }
 
-    if(ptr->prev != NULL)
+    if (ptr->prev == NULL)
     {
-        (ptr->next)->prev = ptr->prev;
-    }
-    else
-    {
-        (ptr->next)->prev = NULL;
+        node *temp = ptr->next;
+        free(ptr);
+        return temp;
     }
 
-    if(ptr->next != NULL)
+    ptr->prev->next = ptr->next;
+
+    if (ptr->next != NULL)
     {
-        (ptr->prev)->next = ptr->next;
-    }
-    else
-    {
-        (ptr->prev)->next = NULL;
+        ptr->next->prev = ptr->prev;
     }
 
     free(ptr);
+    return root;
 }
 
+// print all values in the list
 void print_list(node *ptr)
 {
     if (ptr == NULL)
@@ -130,13 +131,15 @@ int main ()
         list = insert(list, val);
     }
 
-    delete(list, 3);
+    // remove any number from the list
+    list = delete(list, list, 5);
 
+    // print all list values
     print_list(list);
 
     // search for elements
-    //char output[][10] = {"Not Found", "Found"};
-    //printf("3 -> %s\n", output[search(list, 3)]);
+    char output[][10] = {"Not Found", "Found"};
+    printf("3 -> %s\n", output[search(list, 3)]);
 
     // cleaning the list
     unload(list);
