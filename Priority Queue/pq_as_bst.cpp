@@ -8,8 +8,8 @@ private:
         node *right = nullptr, *left = nullptr;
         datatype data;
     };
-    node *root;
-    long long nodes_cnt;
+    node *root = nullptr;
+    long long nodes_cnt = 0;
 
     void deleteSubtree(node* root) {
         if (root == nullptr)
@@ -20,7 +20,7 @@ private:
     }
 
 public:
-    priority_queue() : root(nullptr), nodes_cnt(0) {}
+    priority_queue() = default;
 
     ~priority_queue() {
         deleteSubtree(root);

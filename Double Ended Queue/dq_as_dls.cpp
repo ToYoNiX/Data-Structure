@@ -18,6 +18,14 @@ private:
 public:
     deque() = default;
 
+    ~deque() {
+        while (first) {
+            node* temp = first;
+            first = first->next;
+            delete temp;
+        }
+    }
+
     void push_back(datatype value, bool force = false) {
         if (isReversed && !force) {
             push_front(value, true);
@@ -112,14 +120,6 @@ public:
 
     void reverse() {
         isReversed = !isReversed;
-    }
-
-    ~deque() {
-        while (first) {
-            node* temp = first;
-            first = first->next;
-            delete temp;
-        }
     }
 };
 
