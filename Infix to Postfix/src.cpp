@@ -1,4 +1,5 @@
 #include <iostream>
+#define ll long long
 using namespace std;
 
 class char_stack {
@@ -72,12 +73,19 @@ string infix_to_postfix (string infix) {
     char_stack stack;
     string postfix;
 
-    for (char c : infix) {
-        if (!is_operator(c)) {
-            postfix += c;
-            continue;
+    ll len = infix.size(); 
+    for (ll i = 0; i < len; i++) {
+        if (!is_operator(infix[i])) {
+            while (!is_operator(infix[i]) && i < len) {
+                if (infix[i] != ' ')
+                    postfix += infix[i];
+                i++;
+            }
+
+            postfix += ' ';
         }
 
+        char c = infix[i];
         if (stack.size() == 0) {
             stack.push(c);
             continue;
@@ -100,6 +108,9 @@ string infix_to_postfix (string infix) {
         } else {
             stack.push(c);
         }
+
+        if (postfix.back() != ' ')
+            postfix += ' ';
     }
 
     while (stack.size() != 0) {
