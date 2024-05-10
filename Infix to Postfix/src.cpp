@@ -2,17 +2,18 @@
 #define ll long long
 using namespace std;
 
-class char_stack {
+template <typename datatype>
+class stack {
 private:
     struct node {
         node *prev = nullptr;
-        char data;
+        datatype data;
     };
 
     node *first = nullptr;
     long long nodes_cnt = 0;
 public:
-    char_stack () = default;
+    stack () = default;
 
     void push (char c) {
         nodes_cnt++;
@@ -70,7 +71,7 @@ bool is_operator (char c) {
 }
 
 string infix_to_postfix (string infix) {
-    char_stack stack;
+    stack <char> stack;
     string postfix;
 
     ll len = infix.size(); 
