@@ -15,10 +15,10 @@ private:
 public:
     stack () = default;
 
-    void push (char c) {
+    void push (datatype value) {
         nodes_cnt++;
         node *n = new node;
-        n->data = c;
+        n->data = value;
 
         if (first == nullptr) {
             first = n;
@@ -40,7 +40,7 @@ public:
         delete n;
     }
 
-    char top () {
+    datatype top () {
         return first->data;
     }
 

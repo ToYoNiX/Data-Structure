@@ -15,10 +15,10 @@ private:
 public:
     stack () = default;
 
-    void push (char c) {
+    void push (datatype value) {
         nodes_cnt++;
         node *n = new node;
-        n->data = c;
+        n->data = value;
 
         if (first == nullptr) {
             first = n;
@@ -40,7 +40,7 @@ public:
         delete n;
     }
 
-    char top () {
+    datatype top () {
         return first->data;
     }
 
@@ -56,10 +56,53 @@ bool is_operator (char c) {
     return false;
 }
 
-ll postfix_evaluate (string) {
-    stack <int> stack;
+ll postfix_evaluate (string postfix) {
+    stack <ll> stack;
+    
+    ll len = postfix.size();
+    string num = "";
+    for (ll i = 0; i < len; i++) {
+        if (postfix[i] == ' ')
+            continue;
+
+        if (!is_operator(postfix[i])) {
+            while (postfix[i] != ' ' && i < len) {
+                num += postfix[i];
+                i++;
+            }
+            
+            stack.push(stoi(num));
+
+            num = "";
+            continue;
+        }
+
+        ll num[2];
+        for (int j = 0; j < 2; j++) {
+            num[j] = stack.top();
+            stack.pop();
+        }
+
+        char op = postfix[i];
+        if (op == '+') {
+            stack.push(num[1] + num[0]);
+        } else if (op == '-') {
+            stack.push(num[1] - num[0]);
+        } else if (op == '*') {
+            stack.push(num[1] * num[0]);
+        } else {
+            stack.push(num[1] / num[0]);
+        }
+    }
+    
+    return stack.top();
 }
 
 int main () {
+    string postfix;
+    cout << "Postfix: ";
+    getline(cin, postfix);
 
+    cout << "Evaluation: " << postfix_evaluate(postfix) << '\n';
+    return 0;
 }
